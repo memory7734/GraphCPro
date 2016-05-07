@@ -5,84 +5,130 @@
 #include<string>
 using namespace std;
 static CGraph m_Graph;
-int char2int(char* ch)
-{
-	int num = 0, i = 0, temp;
-	while (true)
-	{
-		temp = (int)(ch[i] - '0');
-		if (temp >= 0 && temp < 10)
-		{
-			num *= 10;
-			num += temp;
-		}
-		else
-			return num;
-		i++;
-	}
-	
-}
 bool CreateGraph(void)
 {
-	cout << "==== åˆ›å»ºæ™¯åŒºæ™¯ç‚¹å›¾ ====" << endl;
+	cout << "==== ´´½¨¾°Çø¾°µãÍ¼ ====" << endl;
 	char buffer[20];
 	fstream inVex ;
-	inVex.open("Vex.txt", ios::in);
+	inVex.open("Vex.txt", ios::in);		//´ò¿ªVexÎÄµµ
 	fstream inEdge;
-	inEdge.open("Edge.txt", ios::in);
-	inVex.getline(buffer, 3, '\n');
-	int vexNum = (int)(buffer[0] - '0');
-	cout << "é¡¹ç›®é¡¶ç‚¹æ•°ï¼š" << vexNum << endl;
+	inEdge.open("Edge.txt", ios::in);	//´ò¿ªEdgeÎÄµµ
+	inVex.getline(buffer, 3, '\n');		//¶ÁÈëµÚÒ»ÐÐ¶¥µãÊý
+	int vexNum = atoi(buffer);
+	cout << "ÏîÄ¿¶¥µãÊý£º" << vexNum << endl;
 	Vex vex;
 	m_Graph.Init();
-	cout << "----- é¡¶ç‚¹ -----" << endl;
+	cout << "----- ¶¥µã -----" << endl;
 	for (int i = 0; i < vexNum; i++)
 	{
-		inVex.getline(buffer, 3, '\n');
-		vex.num = (int)(buffer[0] - '0');
-		inVex.getline(vex.name, 20, '\n');
-		inVex.getline(vex.desc, 1024, '\n');
-		m_Graph.InsertVex(vex);
+		inVex.getline(buffer, 3, '\n');		//¶ÁÈë¶¥µã±àºÅ
+		vex.num = atoi(buffer);
+		inVex.getline(vex.name, 20, '\n');	//¶ÁÈë¶¥µãÃû
+		inVex.getline(vex.desc, 1024, '\n');//¶ÁÈë¶¥µãÃèÊö
+		m_Graph.InsertVex(vex);				//²åÈë¶¥µã
 		cout << vex.num << "-" << vex.name << endl;
 	}
 	Edge edge; 
-	cout << "----- è¾¹ -----" << endl;
+	cout << "----- ±ß -----" << endl;
 	while (inEdge.good())
 	{
-		inEdge.getline(buffer, 20, '\n');
+		inEdge.getline(buffer, sizeof(buffer), '\n');//¶ÁÈë±ßÐÅÏ¢
 		char* p = strtok(buffer," \n");
-		edge.vex1 = char2int(p);
+		edge.vex1 = atoi(p);				//¶ÁÈëµÚÒ»¸ö¶¥µã
 		p = strtok(NULL, " \n");
-		edge.vex2 = char2int(p);
+		edge.vex2 = atoi(p);				//¶ÁÈëµÚ¶þ¸ö¶¥µã
 		p = strtok(NULL, " \n");
-		edge.weight = char2int(p);
-		m_Graph.InsertEdge(edge);
+		edge.weight = atoi(p);				//¶ÁÈëÈ¨ÖØ
+		m_Graph.InsertEdge(edge);			//²åÈë±ß
 		cout <<"<v"<< edge.vex1 << ",v" << edge.vex2 <<"> "<< edge.weight << endl;
 	}
-	inVex.close();
+	inVex.close();							//¹Ø±ÕÁ÷
 	inEdge.close();
 	return true;
 }
 void GetSpotInfo(void)
 {
-	cout << "==== æŸ¥è¯¢æ™¯ç‚¹ä¿¡æ¯ ====" << endl;
+	cout << "==== ²éÑ¯¾°µãÐÅÏ¢ ====" << endl;
 	Vex vex;
+	//»ñµÃÃ¿¸ö¶¥µãÐÅÏ¢²¢Êä³ö
 	for (int i = 0; i < m_Graph.GetVexnum(); i++)
 	{
 		vex = m_Graph.GetVex(i);
 		cout << vex.num << "-" << vex.name << endl;
 	}
-	cout << "è¯·è¾“å…¥æƒ³è¦æŸ¥è¯¢çš„æ™¯ç‚¹ç¼–å·ï¼š";
+	cout << "ÇëÊäÈëÏëÒª²éÑ¯µÄ¾°µã±àºÅ£º";
 	int nVex;
 	cin >> nVex;
 	vex = m_Graph.GetVex(nVex);
 	cout << vex.name << endl;
 	cout << vex.desc << endl;
-	cout << "----- å‘¨è¾¹æ™¯åŒº -----" << endl;
+	cout << "----- ÖÜ±ß¾°Çø -----" << endl;
 	Edge edge[20];
+	//»ñµÃÓë¶¥µãÏà¹ØµÄ±ß
 	int edgenum=m_Graph.FindEdge(nVex, edge);
 	for (int i = 0; i < edgenum; i++)
 	{
-		cout <<char( 'A' + nVex) << "åŒº->" <<char( 'A' + edge[i].vex2 )<< "åŒº " << edge[i].weight << "m" << endl;
+		cout <<char( 'A' + nVex) << "Çø->" <<char( 'A' + edge[i].vex2 )<< "Çø " << edge[i].weight << "m" << endl;
 	}
+}
+void TravelPath(void)
+{
+	cout << "==== ÂÃÓÎ¾°µãµ¼º½ ====" << endl;
+	Vex vex;
+	//»ñµÃÃ¿¸ö¶¥µãÐÅÏ¢²¢Êä³ö
+	for (int i = 0; i < m_Graph.GetVexnum(); i++)
+	{
+		vex = m_Graph.GetVex(i);
+		cout << vex.num << "-" << vex.name << endl;
+	}
+	cout << "ÇëÊäÈëÆðÊ¼µã±àºÅ£º";
+	int beginNum;
+	cin >> beginNum;
+	PathList pList = (PathList)malloc(sizeof(Path));
+	cout << "µ¼ÓÎÂ·ÏßÎª£º" << endl;
+	m_Graph.DFSTraverse(beginNum, pList);
+}
+void FindShortPath(void)
+{
+	cout << "==== ËÑË÷×î¶ÌÂ·¾¶ ====" << endl;
+	Vex vex;
+	//»ñµÃÃ¿¸ö¶¥µãÐÅÏ¢²¢Êä³ö
+	for (int i = 0; i < m_Graph.GetVexnum(); i++)
+	{
+		vex = m_Graph.GetVex(i);
+		cout << vex.num << "-" << vex.name << endl;
+	}
+	int nVexStart, nVexEnd;
+	cout << "ÇëÊäÈëÆðµãµÄ±àºÅ£º";
+	cin >> nVexStart;
+	cout << "ÇëÊäÈëÖÕµãµÄ±àºÅ£º";
+	cin >> nVexEnd;
+	Edge aPath[MAX_VERTEX_NUM];
+	int shortPath=m_Graph.FindShortPath(nVexStart, nVexEnd, aPath);
+	cout << "×î¶ÌÂ·ÏßÎª£º" ;
+	int i = 0;
+	while (i< m_Graph.GetVexnum())
+	{
+		if (aPath[i].vex1 != aPath[i].vex2)
+			cout << m_Graph.GetVex(aPath[i].vex1).name << "->";
+		else
+		{
+			cout << m_Graph.GetVex(aPath[i-1].vex2).name << endl;
+			break;
+		}
+		i++;
+	}
+	cout << "×î¶Ì¾àÀëÎª£º" << shortPath << endl;
+}
+void DesignPath(void)
+{
+	cout << "==== ÆÌÉèµçÂ·¹æÔò ====" << endl;
+	cout << "ÔÚÒÔÏÂÁ½¸ö¾°µãÖ®¼äÆÌÉèµçÂ·£º" << endl;
+	Edge aPath[MAX_VERTEX_NUM];
+	int length = m_Graph.FindMinTree(aPath);
+	for (int i = 0; (i < m_Graph.GetVexnum()) && (aPath[i].vex1 != aPath[i].vex2); i++)
+	{
+		cout << m_Graph.GetVex(aPath[i].vex1).name << " - " << m_Graph.GetVex(aPath[i].vex2).name << "   " << aPath[i].weight << "m" << endl;
+	}
+	cout << "ÆÌÉèµçÂ·µÄ×Ü³¤¶ÈÎª£º" << length << endl;
 }

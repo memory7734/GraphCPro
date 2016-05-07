@@ -2,29 +2,38 @@
 #define MAX_VERTEX_NUM 20
 struct Vex
 {
-	int num;			//æ™¯ç‚¹ç¼–å·
-	char name[20];		//æ™¯ç‚¹åå­—
-	char desc[1024];	//æ™¯ç‚¹ä»‹ç»
+	int num;			//¾°µã±àºÅ
+	char name[20];		//¾°µãÃû×Ö
+	char desc[1024];	//¾°µã½éÉÜ
 };
 struct Edge
 {
-	int vex1;			//è¾¹çš„ç¬¬ä¸€ä¸ªé¡¶ç‚¹
-	int vex2;			//è¾¹çš„ç¬¬äºŒä¸ªé¡¶ç‚¹
-	int weight;			//æƒå€¼
+	int vex1;			//±ßµÄµÚÒ»¸ö¶¥µã
+	int vex2;			//±ßµÄµÚ¶ş¸ö¶¥µã
+	int weight;			//È¨Öµ
 };
+typedef struct Path
+{
+	int vexs[20];			//±£´æÒ»ÌõÂ·¾¶
+	Path *next=nullptr;		//ÏÂÒ»ÌõÂ·¾¶
+} *PathList;
 class CGraph
 {
 private:
-	int m_aAdjMatrix[20][20];		//é‚»æ¥çŸ©é˜µ
-	Vex m_aVexs[20];				//é¡¶ç‚¹ä¿¡æ¯æ•°ç»„
-	int m_nVexNum;					//å½“å‰å›¾çš„é¡¶ç‚¹ä¸ªæ•°
+	int m_aAdjMatrix[20][20];										//ÁÚ½Ó¾ØÕó
+	Vex m_aVexs[20];												//¶¥µãĞÅÏ¢Êı×é
+	int m_nVexNum;													//µ±Ç°Í¼µÄ¶¥µã¸öÊı
 public:
-	void Init(void);						//åˆå§‹åŒ–å›¾ç»“æ„
-	int InsertVex(Vex sVex);				//å°†é¡¶ç‚¹ä¿å­˜åˆ°é‚»æ¥çŸ©é˜µ
-	int InsertEdge(Edge sEdge);			//å°†è¾¹ä¿å­˜åˆ°é‚»æ¥çŸ©é˜µ
-	Vex GetVex(int nVex);					//æŸ¥è¯¢æŒ‡å®šé¡¶ç‚¹ä¿¡æ¯
-	int FindEdge(int nVex, Edge aEdge[]);	//æŸ¥è¯¢ä¸æŒ‡å®šé¡¶ç‚¹ç›¸è¿çš„è¾¹
-	int GetVexnum(void);					//è·å–å½“å‰é¡¶ç‚¹æ•°
+	void Init(void);												//³õÊ¼»¯Í¼½á¹¹
+	int InsertVex(Vex sVex);										//½«¶¥µã±£´æµ½ÁÚ½Ó¾ØÕó
+	int InsertEdge(Edge sEdge);										//½«±ß±£´æµ½ÁÚ½Ó¾ØÕó
+	Vex GetVex(int nVex);											//²éÑ¯Ö¸¶¨¶¥µãĞÅÏ¢
+	int FindEdge(int nVex, Edge aEdge[]);							//²éÑ¯ÓëÖ¸¶¨¶¥µãÏàÁ¬µÄ±ß
+	int GetVexnum(void);											//»ñÈ¡µ±Ç°¶¥µãÊı
+	void DFS(int nVex, bool bVisted[],int &nIndex,PathList &pList);	//Éî¶ÈÓÅÏÈËÑË÷
+	void DFSTraverse(int nVex, PathList &pList);					//µ÷ÓÃÉî¶ÈÓÅÏÈËÑË÷
+	int FindShortPath(int nVexStart, int nVexEnd, Edge aPath[]);	//Ñ°ÕÒÁ½µã¼ä×î¶ÌÂ·¾¶
+	int FindMinTree(Edge aPath[]);									//Ñ°ÕÒ×îĞ¡Éú³ÉÊ÷
 };
 
 

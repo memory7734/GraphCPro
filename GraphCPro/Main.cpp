@@ -7,15 +7,15 @@ int main(void)
 	int bRunning=1;
 	while (bRunning)
 	{
-		//è¾“å‡ºç•Œé¢
-		cout << "====æ™¯åŒºä¿¡æ¯ç®¡ç†ç³»ç»Ÿ====" << endl;
-		cout << "1.åˆ›å»ºæ™¯åŒºæ™¯ç‚¹å›¾" << endl;
-		cout << "2.æŸ¥è¯¢æ™¯ç‚¹ä¿¡æ¯" << endl;
-		cout << "3.æ—…æ¸¸æ™¯ç‚¹å¯¼èˆª" << endl;
-		cout << "4.æœç´¢æœ€çŸ­è·¯å¾„" << endl;
-		cout << "5.é“ºè®¾ç”µè·¯è§„åˆ’" << endl;
-		cout << "0.é€€å‡º" << endl;
-		cout << "è¯·è¾“å…¥æ“ä½œç¼–å·ï¼ˆ0~5ï¼‰ï¼š";
+		//Êä³ö½çÃæ
+		cout << "====¾°ÇøĞÅÏ¢¹ÜÀíÏµÍ³====" << endl;
+		cout << "1.´´½¨¾°Çø¾°µãÍ¼" << endl;
+		cout << "2.²éÑ¯¾°µãĞÅÏ¢" << endl;
+		cout << "3.ÂÃÓÎ¾°µãµ¼º½" << endl;
+		cout << "4.ËÑË÷×î¶ÌÂ·¾¶" << endl;
+		cout << "5.ÆÌÉèµçÂ·¹æ»®" << endl;
+		cout << "0.ÍË³ö" << endl;
+		cout << "ÇëÊäÈë²Ù×÷±àºÅ£¨0~5£©£º";
 		cin >> bRunning;
 		switch (bRunning)
 		{
@@ -26,12 +26,16 @@ int main(void)
 			GetSpotInfo();
 			break;
 		case 3:
+			TravelPath();
 			break;
 		case 4:
+			FindShortPath();
 			break;
 		case 5:
+			DesignPath();
 			break;
 		case 0:
+			exit(0);
 			break;
 		default:
 			break;
